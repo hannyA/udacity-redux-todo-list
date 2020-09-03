@@ -3,7 +3,6 @@
 <head>
   <title>Udacity Todos Goals</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
-
 </head>
 
 <body>
@@ -18,8 +17,9 @@
     <input id='goal' type='text' placeholder='Add Goal' />
     <button id='goalBtn'>Add Goal</button>
     <ul id='goals'></ul>
-
   </div>
+
+
   <script type='text/javascript'>
   
     function generateId () {
@@ -118,9 +118,9 @@ const checker = store => next => action => {
 
 const logger = store => next => action => {
   console.group(action.type)
-    consle.log('The action: ', action)
+    console.log('The action: ', action)
     const result = next(action)
-    consle.log('The new state: ', store.getState())
+    console.log('The new state: ', store.getState())
   console.groupEnd()
   return result
 }
@@ -204,9 +204,6 @@ store.subscribe(() => {
         .appendChild(node)
     }
 
-
-
-
     function addGoalToDOM(goal){
         const node = document.createElement('li')
         const text = document.createTextNode(goal.name)
@@ -221,6 +218,21 @@ store.subscribe(() => {
     }
 
 
+  </script>
+  <script type='text/babel'>
+    {/* class App extends React.Component {
+      render() {
+        return (
+          <div>
+            APP
+          </div>
+        )
+      }
+    }
+
+    React.DOM.render(
+      <App />, documentGetElementById('app')
+    ) */}
   </script>
 </body>
 </html>
