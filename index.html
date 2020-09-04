@@ -231,9 +231,13 @@ store.subscribe(() => {
     function List(props) {
       return (
         <ul>
-          <li>
-            LIST
-          </li>
+          {props.items.map((item) => (
+            <li key={item.id}>
+            <span>
+              {item.name}
+            </span>
+            </li>
+          ))}
         </ul>
       )
     }
@@ -261,7 +265,8 @@ store.subscribe(() => {
               ref={(input) => this.input = input}
             />
             <button onClick={this.addItem}>Add Todo</button>
-            <List />
+            
+            <List items={this.props.todos} />
           </div>
         )
       }
@@ -274,7 +279,7 @@ store.subscribe(() => {
         const name = this.input.value
         this.input.value = ''
 
-        store.dispatch(addGoalAction({
+        this.props.store.dispatch(addGoalAction({
             id: generateId(),
             name
         }))
@@ -291,18 +296,27 @@ store.subscribe(() => {
             />
             <button onClick={this.addItem}>Add Goal</button>
             
-            <List />
+            <List items={this.props.goals} />
           </div>
         )
       }
     }
 
     class App extends React.Component {
+      componentDidMount() {
+        const { store } = this.props
+        store.subscribe(() => this.forceUpdate())
+      }
+
       render() {
+        const { store } = this.props
+        const { todos, goals } = store.getState()
+
         return (
           <div>
-            <Todos store={this.props.store} />
-            <Goals />
+            <Todos todos={todos} store={this.props.store} />
+            <Goals goals={goals} store={this.props.store} />
+
           </div>
         )
       }
