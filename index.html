@@ -75,7 +75,7 @@ function receiveDataAction(todos, goals){
   }
 }
 
-function handleAddTodo(todo, cb) {
+function handleAddTodo(name, cb) {
   return (dispatch) => {
     return API.saveTodo(name)
       .then((todo) => {
