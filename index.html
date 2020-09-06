@@ -101,6 +101,19 @@ function handleAddGoal(name , cb) {
   }
 }
 
+function handleDeleteGoal(goal) {
+  return (dispatch) => {
+    dispatch(removeGoalAction(goal.id))
+
+    return API.deleteGoal(goal.id)
+      .catch(() => {
+        dispatch(addGoalAction(goal))
+        alert('An error occured. Try again.')
+      })
+    }
+  }
+
+
 function todos(state = [], action) {
   switch(action.type) {
     case ADD_TODO :
@@ -253,14 +266,9 @@ const store = Redux.createStore(Redux.combineReducers({
       }
       
       removeItem = goal => {
-        this.props.store.dispatch(removeGoalAction(goal.id))
-
-        return API.deleteGoal(goal.id)
-          .catch(() => {
-            this.props.store.dispatch(addGoalAction(goal))
-            alert('An error occured. Try again.')
-          })
+        this.props.store.dispatch(handleDeleteGoal(goal))
       }
+
       render() {
         return (
           <div>
