@@ -340,8 +340,35 @@ const store = Redux.createStore(Redux.combineReducers({
       }
     }
 
+    class ConnectedApp extends React.Component {
+      render() {
+        return (
+          <Context.Consumer>
+            {store => (
+              <App store={store} />
+            )}
+          </Context.Consumer>
+        )
+      }
+    }
+    const Context = React.createContext()
+
+    class Provider extends React.Component {
+      render() {
+        return (
+          <Context.Provider value = {this.props.store}>
+            {this.props.children}
+          </Context.Provider>
+        )
+      }
+    }
+    
     ReactDOM.render(
-      <App store={store} />, document.getElementById('app')
+      <Provider store={store}>
+        <ConnectedApp  />
+      </Provider>, 
+      document.getElementById('app')
+
     )
   </script>
 </body>
